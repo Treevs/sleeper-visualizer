@@ -1,0 +1,22 @@
+{
+  "files": {
+    "main.css": "/sleeper-visualizer/static/css/main.a617e044.chunk.css",
+    "main.js": "/sleeper-visualizer/static/js/main.cada03e9.chunk.js",
+    "main.js.map": "/sleeper-visualizer/static/js/main.cada03e9.chunk.js.map",
+    "runtime-main.js": "/sleeper-visualizer/static/js/runtime-main.e41c2ec0.js",
+    "runtime-main.js.map": "/sleeper-visualizer/static/js/runtime-main.e41c2ec0.js.map",
+    "static/js/2.63b252cc.chunk.js": "/sleeper-visualizer/static/js/2.63b252cc.chunk.js",
+    "static/js/2.63b252cc.chunk.js.map": "/sleeper-visualizer/static/js/2.63b252cc.chunk.js.map",
+    "static/js/3.4461a384.chunk.js": "/sleeper-visualizer/static/js/3.4461a384.chunk.js",
+    "static/js/3.4461a384.chunk.js.map": "/sleeper-visualizer/static/js/3.4461a384.chunk.js.map",
+    "index.html": "/sleeper-visualizer/index.html",
+    "static/css/main.a617e044.chunk.css.map": "/sleeper-visualizer/static/css/main.a617e044.chunk.css.map",
+    "static/js/2.63b252cc.chunk.js.LICENSE.txt": "/sleeper-visualizer/static/js/2.63b252cc.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.e41c2ec0.js",
+    "static/js/2.63b252cc.chunk.js",
+    "static/css/main.a617e044.chunk.css",
+    "static/js/main.cada03e9.chunk.js"
+  ]
+}

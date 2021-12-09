@@ -1,7 +1,9 @@
 import './App.css';
-import {useEffect, useState} from "react";
+import {useEffect, useState, useRef} from "react";
 import User from "./User";
+// import mock from "./mockData.json"
 const axios = require('axios');
+
 // const store = require('store');
 
 
@@ -9,10 +11,43 @@ const axios = require('axios');
 function App() {
 
   const [mappedUsers, setMappedUsers] = useState([]);
+  const [sortedUsers, setSortedUsers] = useState([]);
+  const [operation, setOperation] = useState("after")
   const [week, setWeek] = useState(0);
+  const textInput = useRef(null);
 
-  const handleWeekChange = (week) => {
-    setWeek(week.target.value)
+  const handleWeekChange = (event) => {
+    let value = parseInt(event.target.value);
+    if(value === "" || isNaN(value)) {
+      value = 0;
+    }
+    if(value > 18) {
+      value = value%10;
+    }
+    if(value < 0) {
+      value = 0
+    }
+    setWeek(value)
+  }
+
+  const updateOperation = (event) => {
+    setOperation(event.target.dataset.operation)
+  }
+
+
+  const calculate = async () => {
+    switch(operation) {
+      case "after":
+        calculatePointsScoredAfter();
+        break;
+      case "before":
+        calculatePointsScoredUpToAndIncluding();
+        break;
+      default:
+        console.log("Unknown operation, defaulting to 'after'");
+        calculatePointsScoredAfter();
+    }
+    sortUsers();
   }
   const getUsersAndRosters = async (leagueId) => {
     const users = await axios.get(`https://api.sleeper.app/v1/league/${leagueId}/users`);
@@ -58,22 +93,74 @@ function App() {
     return mappedUsers;
   }
 
+  const calculatePointsScoredAfter = () => {
+    const newMappedUsers = mappedUsers;
+
+    for (const user of newMappedUsers) {
+      let points = 0;
+      const weeklyPointsScored = user.weeklyPointsScored;
+      for (let i=week; i<18; i++) {
+        points += weeklyPointsScored[i]
+        user.points = points;
+      }
+    }
+  }
+
+  const calculatePointsScoredUpToAndIncluding = () => {
+    const newMappedUsers = mappedUsers;
+
+    for (const user of newMappedUsers) {
+      let points = 0;
+      user.points = 0;
+      const weeklyPointsScored = user.weeklyPointsScored;
+      for (let i = 0; i < week; i++) {
+        points += weeklyPointsScored[i]
+        user.points = points;
+      }
+    }
+  }
+
+  const sortUsers = () => {
+    const users = [...mappedUsers];
+    users.sort((a, b) => parseFloat(b.points) - parseFloat(a.points));
+    setSortedUsers(users);
+  }
+
   useEffect( async () => {
     console.log("Render")
     const {users, rosters} = await getUsersAndRosters("735219808769003520");
     const matchups = await getMatchups("735219808769003520");
-    setMappedUsers(mapUsers({users, rosters, matchups}));
+    // const users = mock.users;
+    // const rosters = mock.rosters;
+    // const matchups = mock.matchups;
+    await setMappedUsers(mapUsers({users, rosters, matchups}));
 
   }, [])
+
+  useEffect(() => {
+    textInput.current?.focus();
+    calculate();
+  }, [mappedUsers, week, operation])
+
+
   return (
     <div className="App">
-      <div>
-        <div>Points scored after week</div>
-        <input type="text" value={week} onChange={handleWeekChange}/>
+      <div className="content">
+        <div className="form-group">
+          <div className="left">
+            {operation==="after" && <span>Points scored after week</span>}
+            {operation==="before" && <span>Points scored before (and including) week</span>}
+            <input type="text" ref={textInput} value={week} onChange={handleWeekChange}/>
+          </div>
+          <div className="right">
+            {operation==="after" && <span className="fake-link" data-operation="before" onClick={updateOperation}>Switch to before</span>}
+            {operation==="before" && <span className="fake-link" data-operation="after" onClick={updateOperation}>Switch to after</span>}
+          </div>
+        </div>
+        {sortedUsers.map((user) => {
+          return <User key={user.userId} user={user} week={week}></User>
+        })}
       </div>
-      {mappedUsers.map((user) => {
-        return <User key={user.userId} user={user} week={week}></User>
-      })}
     </div>
   );
 }

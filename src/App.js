@@ -126,14 +126,15 @@ function App() {
     setSortedUsers(users);
   }
 
-  useEffect( async () => {
-    console.log("Render")
+  const mapData = async () => {
     const {users, rosters} = await getUsersAndRosters("735219808769003520");
     const matchups = await getMatchups("735219808769003520");
-    // const users = mock.users;
-    // const rosters = mock.rosters;
-    // const matchups = mock.matchups;
     await setMappedUsers(mapUsers({users, rosters, matchups}));
+  }
+
+
+  useEffect( () => {
+    mapData();
 
   }, [])
 

@@ -99,7 +99,7 @@ function App() {
     for (const user of newMappedUsers) {
       let points = 0;
       const weeklyPointsScored = user.weeklyPointsScored;
-      for (let i=week; i<18; i++) {
+      for (let i=week; i<17; i++) {
         points += weeklyPointsScored[i]
         user.points = points;
       }

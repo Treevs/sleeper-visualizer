@@ -71,6 +71,20 @@
   float: right;
 }
 
+.median-container {
+    display: inline-block;
+    width: 100%;
+    margin-top: 24px;
+    /*height: 20px;*/
+}
+
+.positive {
+  color: green;
+}
+
+.negative {
+  color: red;
+}
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);

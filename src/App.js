@@ -18,6 +18,7 @@ function App() {
     const [medians2022, setMedians2022] = useState([]);
     const [matchups2021, setMatchups2021] = useState([]);
     const [matchups2022, setMatchups2022] = useState([]);
+    const [treevors, setTreevors] = useState([]);
     const [users, setUsers] = useState([]);
     const [rosters, setRosters] = useState([]);
     const [operation, setOperation] = useState("after")
@@ -59,7 +60,6 @@ function App() {
     }
     const getUsersAndRosters = async (leagueId) => {
         const users = await axios.get(`https://api.sleeper.app/v1/league/${leagueId}/users`);
-        console.log("users", users.data);
         const rosters = await axios.get(`https://api.sleeper.app/v1/league/${leagueId}/rosters`);
         return {users: users.data, rosters: rosters.data};
     }
@@ -90,7 +90,6 @@ function App() {
                 rosterId
             }
 
-            console.log("userObj", userObj);
             //Roster IDs start at 1
             mappedUsers[rosterId - 1] = userObj;
 
@@ -162,6 +161,36 @@ function App() {
         setMappedUsers(mapUsers({users, rosters, matchups: matchups2022}));
     }
 
+    const calculateTreevors = () => {
+        //find second highest score
+        const matchups = matchups2021.concat(matchups2022)
+        console.log("rosters", rosters)
+        console.log("mappedUsers", mappedUsers)
+        const treevors = matchups.map((week, index) => {
+            let year = Math.floor(2021 + index/17);
+            let weekNumber = index % 18 + 1;
+            const sortedWeek = week.sort((a, b) => {
+                return b.points - a.points;
+            });
+            if(weekNumber < 18 && sortedWeek[0].points !==0 && sortedWeek[0].matchup_id === sortedWeek[1].matchup_id) {
+                const playerName = mappedUsers.find((user) => {
+                    return user.rosterId === sortedWeek[1].roster_id;
+                }).userName;
+                return {
+                    playerName,
+                    roster_id: sortedWeek[1].roster_id,
+                    points: sortedWeek[1].points,
+                    year,
+                    week: weekNumber,
+                    index
+                }
+            }
+            return false;
+        }).filter(Boolean)
+        console.log("treevors", treevors)
+        setTreevors(treevors);
+    }
+
 
     useEffect(() => {
         mapData();
@@ -180,7 +209,10 @@ function App() {
     useEffect(() => {
         setMedians2021(calculateMedians(matchups2021));
         setMedians2022(calculateMedians(matchups2022));
-    }, [matchups2021, matchups2022])
+        if(mappedUsers.length > 0) {
+            calculateTreevors()
+        }
+    }, [mappedUsers, matchups2021, matchups2022])
 
 
     return (
@@ -205,7 +237,7 @@ function App() {
                     })}
                 </div>
                 <MedianTable medians2021={medians2021} medians2022={medians2022}/>
-                <Treevors/>
+                <Treevors treevors={treevors}/>
 
             </div>
         </div>

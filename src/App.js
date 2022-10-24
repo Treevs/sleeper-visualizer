@@ -164,8 +164,6 @@ function App() {
     const calculateTreevors = () => {
         //find second highest score
         const matchups = matchups2021.concat(matchups2022)
-        console.log("rosters", rosters)
-        console.log("mappedUsers", mappedUsers)
         const treevors = matchups.map((week, index) => {
             let year = Math.floor(2021 + index/17);
             let weekNumber = index % 18 + 1;
@@ -187,7 +185,6 @@ function App() {
             }
             return false;
         }).filter(Boolean)
-        console.log("treevors", treevors)
         setTreevors(treevors);
     }
 

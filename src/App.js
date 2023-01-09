@@ -3,6 +3,7 @@ import {useEffect, useState, useRef} from "react";
 import User from "./User";
 import MedianTable from "./components/MedianTable";
 import Treevors from "./components/Treevors";
+import DraftOrder from "./components/DraftOrder";
 const axios = require('axios');
 
 // const store = require('store');
@@ -130,6 +131,7 @@ function App() {
         }
     }
 
+
     const calculateMedians = (matchups) => {
         const medians = [];
         for (const week of matchups) {
@@ -233,6 +235,7 @@ function App() {
                         return <User key={user.userId} user={user} week={week}></User>
                     })}
                 </div>
+                <DraftOrder users={mappedUsers} matchups={matchups2022}/>
                 <MedianTable medians2021={medians2021} medians2022={medians2022}/>
                 <Treevors treevors={treevors}/>
 

@@ -2,7 +2,7 @@
   "name": "sleeper-visualizer",
   "version": "0.1.0",
   "private": true,
-  "homepage": "http://treevs.github.io/sleeper-visualizer",
+  "homepage": "https://thetrophyleague.com",
   "dependencies": {
     "@testing-library/jest-dom": "^5.16.1",
     "@testing-library/react": "^11.2.7",

@@ -235,9 +235,10 @@ function App() {
                         return <User key={user.userId} user={user} week={week}></User>
                     })}
                 </div>
-                <DraftOrder users={mappedUsers} matchups={matchups2022}/>
-                <MedianTable medians2021={medians2021} medians2022={medians2022}/>
-                <Treevors treevors={treevors}/>
+                {/*<DraftOrder users={mappedUsers} matchups={matchups2022}/>*/}
+                {/*<MedianTable medians2021={medians2021} medians2022={medians2022}/>*/}
+                {/*<Treevors treevors={treevors}/>*/}
+
 
             </div>
         </div>

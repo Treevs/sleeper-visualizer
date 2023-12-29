@@ -10,7 +10,7 @@ function MedianTable(props) {
                     <th>Median 2021</th>
                     <th>Median 2022</th>
                     <th>Median 2023</th>
-                    <th>Change</th>
+                    <th>Change since last year</th>
                 </tr>
                 </thead>
                 <tbody>

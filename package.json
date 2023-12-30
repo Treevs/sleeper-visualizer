@@ -4,23 +4,19 @@
   "private": true,
   "homepage": "https://thetrophyleague.com",
   "dependencies": {
-    "@testing-library/jest-dom": "^5.16.1",
-    "@testing-library/react": "^11.2.7",
-    "@testing-library/user-event": "^12.8.3",
-    "axios": "^0.24.0",
-    "react": "^17.0.2",
-    "react-dom": "^17.0.2",
-    "react-scripts": "^5.0.1",
+    "@testing-library/jest-dom": "^6.1.6",
+    "@testing-library/react": "^14.1.2",
+    "@testing-library/user-event": "^14.5.2",
+    "axios": "^1.6.3",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
     "store": "^2.0.12",
-    "web-vitals": "^1.1.2"
+    "web-vitals": "^3.5.1"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "predeploy": "npm run build",
+    "start": "ts-node-dev --respawn src/index.tsx",
     "deploy": "gh-pages -d build",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "build": "tsc"
   },
   "eslintConfig": {
     "extends": [
@@ -41,6 +37,8 @@
     ]
   },
   "devDependencies": {
-    "gh-pages": "^3.2.3"
+    "gh-pages": "^3.2.3",
+    "ts-node-dev": "^2.0.0",
+    "typescript": "^5.3.3"
   }
 }

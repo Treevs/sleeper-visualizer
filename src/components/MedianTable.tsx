@@ -1,4 +1,6 @@
-function MedianTable(props) {
+import React from 'react';
+
+function MedianTable(props: { medians2021: any; medians2022: any; medians2023: any; }) {
     const {medians2021, medians2022, medians2023} = props;
 
     return (
@@ -14,8 +16,8 @@ function MedianTable(props) {
                 </tr>
                 </thead>
                 <tbody>
-                {medians2023.map((median, index) => {
-                        const change = (median - medians2022[index]).toFixed(2);
+                {medians2023.map((median: number, index: number) => {
+                        const change = parseFloat((median - medians2022[index]).toFixed(2));
                         let changeJSX;
                         if (median === 0) {
                             changeJSX = <td>N/A</td>

@@ -1,4 +1,6 @@
-function Treevors(props) {
+import React from 'react';
+
+function Treevors(props: { treevors: any[]; }) {
     return (
         <div className="treevors-container">
             <h1>Treevors</h1>

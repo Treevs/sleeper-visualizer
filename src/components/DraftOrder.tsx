@@ -1,10 +1,8 @@
-import specialPlayers from '../bills_bengals_players.json'
-import {useEffect} from "react";
-function DraftOrder(props) {
+import React from "react";
+function DraftOrder(props: { users: any; matchups: any; }) {
 
 
     const {users, matchups} = props;
-    console.log("specialPlayer ids", specialPlayers.ids);
     console.log("matchups", matchups);
 
     return (

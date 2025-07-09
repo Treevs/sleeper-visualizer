@@ -1,5 +1,5 @@
 function MedianTable(props) {
-    const {medians2021, medians2022, medians2023} = props;
+    const {medians2021, medians2022, medians2023, medians2024} = props;
 
     return (
         <div className="median-container">
@@ -10,12 +10,13 @@ function MedianTable(props) {
                     <th>Median 2021</th>
                     <th>Median 2022</th>
                     <th>Median 2023</th>
+                    <th>Median 2024</th>
                     <th>Change since last year</th>
                 </tr>
                 </thead>
                 <tbody>
-                {medians2023.map((median, index) => {
-                        const change = (median - medians2022[index]).toFixed(2);
+                {medians2024.map((median, index) => {
+                        const change = (median - medians2023[index]).toFixed(2);
                         let changeJSX;
                         if (median === 0) {
                             changeJSX = <td>N/A</td>
@@ -25,13 +26,13 @@ function MedianTable(props) {
                             changeJSX = <td className="negative">{change}</td>
                         }
                         
-                        console.log({median, medians2021, medians2022, medians2023})
                         return (
                             <tr key={index}>
                                 <td>{index + 1}</td>
                                 <td>{medians2021[index]?.toFixed(2)}</td>
                                 <td>{medians2022[index]?.toFixed(2)}</td>
                                 <td>{medians2023[index]?.toFixed(2)}</td>
+                                <td>{medians2024[index]?.toFixed(2)}</td>
                                 {changeJSX}
                             </tr>
                         )

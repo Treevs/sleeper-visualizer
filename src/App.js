@@ -14,14 +14,17 @@ function App() {
     const LEAGUE_ID_2021 = "735219808769003520";
     const LEAGUE_ID_2022 = "846861408397283328";
     const LEAGUE_ID_2023 = "985407521559023616";
+    const LEAGUE_ID_2024 = "1117345864621723648";
     const [mappedUsers, setMappedUsers] = useState([]);
     const [sortedUsers, setSortedUsers] = useState([]);
     const [medians2021, setMedians2021] = useState([]);
     const [medians2022, setMedians2022] = useState([]);
     const [medians2023, setMedians2023] = useState([]);
+    const [medians2024, setMedians2024] = useState([]);
     const [matchups2021, setMatchups2021] = useState([]);
     const [matchups2022, setMatchups2022] = useState([]);
     const [matchups2023, setMatchups2023] = useState([]);
+    const [matchups2024, setMatchups2024] = useState([]);
     const [treevors, setTreevors] = useState([]);
     const [users, setUsers] = useState([]);
     const [rosters, setRosters] = useState([]);
@@ -158,18 +161,19 @@ function App() {
     }
 
     const mapData = async () => {
-        const {users, rosters} = await getUsersAndRosters(LEAGUE_ID_2023);
+        const {users, rosters} = await getUsersAndRosters(LEAGUE_ID_2024);
         await setUsers(users);
         await setRosters(rosters);
         await setMatchups2021(await getMatchups(LEAGUE_ID_2021));
         await setMatchups2022(await getMatchups(LEAGUE_ID_2022));
         await setMatchups2023(await getMatchups(LEAGUE_ID_2023));
-        setMappedUsers(mapUsers({users, rosters, matchups: matchups2023}));
+        await setMatchups2024(await getMatchups(LEAGUE_ID_2024));
+        setMappedUsers(mapUsers({users, rosters, matchups: matchups2024}));
     }
 
     const calculateTreevors = () => {
         //find second highest score
-        const matchups = matchups2021.concat(matchups2022).concat(matchups2023)
+        const matchups = matchups2021.concat(matchups2022).concat(matchups2023).concat(matchups2024)
         const treevors = matchups.map((week, index) => {
             let year = Math.floor(2021 + index/17);
             let weekNumber = index % 18 + 1;
@@ -205,18 +209,19 @@ function App() {
         calculate();
     }, [mappedUsers, week, operation])
     useEffect(() => {
-        if(users.length > 0 && rosters.length > 0 && matchups2023.length > 0) {
-            setMappedUsers(mapUsers({users, rosters, matchups: matchups2023}));
+        if(users.length > 0 && rosters.length > 0 && matchups2024.length > 0) {
+            setMappedUsers(mapUsers({users, rosters, matchups: matchups2024}));
         }
-    }, [matchups2023])
+    }, [matchups2024])
     useEffect(() => {
         setMedians2021(calculateMedians(matchups2021));
         setMedians2022(calculateMedians(matchups2022));
         setMedians2023(calculateMedians(matchups2023));
+        setMedians2024(calculateMedians(matchups2024));
         if(mappedUsers.length > 0) {
             calculateTreevors()
         }
-    }, [mappedUsers, matchups2021, matchups2022, matchups2023])
+    }, [mappedUsers, matchups2021, matchups2022, matchups2023, matchups2024])
 
 
     return (
@@ -241,7 +246,7 @@ function App() {
                     })}
                 </div>
                 {/*<DraftOrder users={mappedUsers} matchups={matchups2022}/>*/}
-                <MedianTable medians2021={medians2021} medians2022={medians2022} medians2023={medians2023}/>
+                <MedianTable medians2021={medians2021} medians2022={medians2022} medians2023={medians2023} medians2024={medians2024}/>
                 <Treevors treevors={treevors}/>
 
 
